@@ -22,7 +22,7 @@
     "lint": "prettier --write . && eslint . --fix",
     "test": "cross-env NODE_ENV=development node scripts/test.js",
     "release": "zotero-plugin release",
-    "update-deps": "npm update --save",
+    "update-deps": "yarn upgrade-interactive --latest",
     "postinstall": "patch-package && shx cp -R patches/react node_modules/ && shx cp -R patches/react-dom node_modules/"
   },
   "repository": {

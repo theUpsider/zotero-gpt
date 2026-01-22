@@ -9,7 +9,7 @@
 
 var chromeHandle
 
-function install(data, reason) { }
+function install(data, reason) {}
 
 // APP_STARTUP: 1,
 // APP_SHUTDOWN: 2,
@@ -98,6 +98,17 @@ async function startup({ id, version, resourceURI, rootURI }, reason) {
   }
   ctx._globalThis = ctx
 
+  // Some vendor code (e.g., zod-to-json-schema) calls `console.*` during load;
+  // provide a console bound to the main window or fall back to Zotero logging.
+  const winConsole = Zotero.getMainWindow()?.console
+  const fallbackConsole = {
+    log: (...args) => Zotero.log(args.join(" ")),
+    info: (...args) => Zotero.log(args.join(" ")),
+    warn: (...args) => Zotero.logError(args.join(" ")),
+    error: (...args) => Zotero.logError(args.join(" ")),
+  }
+  ctx.console = winConsole ?? fallbackConsole
+
   Services.scriptloader.loadSubScript(
     `${rootURI}/chrome/content/scripts/__addonRef__.js`,
     ctx,
@@ -119,7 +130,7 @@ function shutdown({ id, version, resourceURI, rootURI }, reason) {
   }
   if (typeof Zotero === "undefined") {
     Zotero = Components.classes["@zotero.org/Zotero;1"].getService(
-      Components.interfaces.nsISupports
+      Components.interfaces.nsISupports,
     ).wrappedJSObject
   }
   Zotero.__addonInstance__?.hooks.onShutdown()
@@ -136,7 +147,7 @@ function shutdown({ id, version, resourceURI, rootURI }, reason) {
   }
 }
 
-function uninstall(data, reason) { }
+function uninstall(data, reason) {}
 
 // Loads default preferences from defaults/preferences/prefs.js in Zotero 6
 // function setDefaultPrefs(rootURI) {
