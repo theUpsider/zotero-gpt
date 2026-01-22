@@ -22,7 +22,7 @@
     "test": "cross-env NODE_ENV=development node scripts/test.js",
     "release": "zotero-plugin release",
     "update-deps": "npm update --save",
-    "postinstall": "patch-package && cp -R  patches/react node_modules/ && cp -R  patches/react-dom node_modules/"
+    "postinstall": "patch-package && shx cp -R patches/react node_modules/ && shx cp -R patches/react-dom node_modules/"
   },
   "repository": {
     "type": "git",
@@ -92,6 +92,7 @@
     "prettier": "^3.3.3",
     "release-it": "^17.1.1",
     "replace-in-file": "^7.1.0",
+    "shx": "^0.3.4",
     "tailwindcss": "^3.4.3",
     "tiny-glob": "^0.2.9",
     "typescript": "^5.4.5",
