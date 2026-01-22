@@ -103,36 +103,9 @@ function bindPrefEvents() {
   //   })
   addon.data
     .prefs!!.window.document.querySelector(
-      `#zotero-prefpane-${config.addonRef}-OPENAI_MODEL-0`,
+      `#zotero-prefpane-${config.addonRef}-OPENAI_MODEL`,
     )
-    ?.addEventListener("command", (e) => {
-      addon.data.prefs!.window.alert(
-        `Please restart Zotero for your new OPENAI Model to take effect.`,
-      )
-    })
-  addon.data
-    .prefs!!.window.document.querySelector(
-      `#zotero-prefpane-${config.addonRef}-OPENAI_MODEL-1`,
-    )
-    ?.addEventListener("command", (e) => {
-      addon.data.prefs!.window.alert(
-        `Please restart Zotero for your new OPENAI Model to take effect.`,
-      )
-    })
-  addon.data
-    .prefs!!.window.document.querySelector(
-      `#zotero-prefpane-${config.addonRef}-OPENAI_MODEL-2`,
-    )
-    ?.addEventListener("command", (e) => {
-      addon.data.prefs!.window.alert(
-        `Please restart Zotero for your new OPENAI Model to take effect.`,
-      )
-    })
-  addon.data
-    .prefs!!.window.document.querySelector(
-      `#zotero-prefpane-${config.addonRef}-OPENAI_MODEL-3`,
-    )
-    ?.addEventListener("command", (e) => {
+    ?.addEventListener("change", (e) => {
       addon.data.prefs!.window.alert(
         `Please restart Zotero for your new OPENAI Model to take effect.`,
       )
