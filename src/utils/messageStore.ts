@@ -21,7 +21,7 @@ export class FileMessageStore extends MessageStore {
     super()
     this.file = this.initFile(
       PathUtils.join(
-        Zotero.DataDirectory._dir,
+        (Zotero as any).DataDirectory._dir,
         config.addonRef,
         "messages.jsonl",
       ),
@@ -89,7 +89,7 @@ export class FileMessageStore extends MessageStore {
     } catch (e) {
       // Rename and clear the file
       const corruptedFilePath = PathUtils.join(
-        Zotero.DataDirectory._dir,
+        (Zotero as any).DataDirectory._dir,
         config.addonRef,
         `messages_corrupted_${new Date().valueOf()}.jsonl`,
       )

@@ -15,6 +15,5 @@ declare global {
   const addon: import("../settings/addon").default
 }
 
-import type { nsXPCComponents_Classes as _nsXPCComponents_Classes } from "zotero-types/types/gecko/lib.gecko.tweaks"
-
-export type nsXPCComponents_Classes = _nsXPCComponents_Classes
+// Use the Components.classes type directly; avoids importing non-module d.ts files
+export type nsXPCComponents_Classes = typeof Components.classes

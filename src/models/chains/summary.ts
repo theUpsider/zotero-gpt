@@ -1,15 +1,15 @@
-import { BaseLanguageModel } from 'langchain/base_language'
-import { loadSummarizationChain, AnalyzeDocumentChain } from 'langchain/chains'
-import { ChainTool } from 'langchain/tools'
+import { BaseLanguageModel } from "langchain/base_language"
+import { loadSummarizationChain, AnalyzeDocumentChain } from "langchain/chains"
+import { ChainTool } from "langchain/tools"
 
 export const loadAnalyzeDocumentChainAsTool = (llm: BaseLanguageModel) => {
-  const combineDocsChain = loadSummarizationChain(llm, { type: 'stuff' })
+  const combineDocsChain = loadSummarizationChain(llm, { type: "stuff" })
   const chain = new AnalyzeDocumentChain({
     combineDocumentsChain: combineDocsChain,
   })
 
   return new ChainTool({
-    name: 'zotero-summary',
+    name: "zotero-summary",
     description:
       'Useful for generating a short summary from a long article the Zotero database. The input should be a LONG string representing the entire content of a single article. The input should not be an item ID such as "568" or multiple articles.',
     chain: chain,

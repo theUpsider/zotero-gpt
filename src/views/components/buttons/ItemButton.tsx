@@ -15,7 +15,7 @@ export function ItemButton({ item, mode, text }: ItemButtonProps) {
 
   function openItem(
     event: React.MouseEvent<HTMLAnchorElement>,
-    item: ItemInfo | AttachmentInfo,
+    item: ItemButtonProps["item"],
     ref: React.RefObject<HTMLAnchorElement>,
     dialog: ReturnType<typeof useDialog>,
     mode: "item" | "attachment",
@@ -42,7 +42,7 @@ export function ItemButton({ item, mode, text }: ItemButtonProps) {
       href="#"
       onClick={(event) => openItem(event, item, ref, dialog, mode)}
     >
-      {text ? text : <ItemIcon type={item.type} />}
+      {text ? text : <ItemIcon type={item.type as any} />}
     </a>
   )
 }

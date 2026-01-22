@@ -50,7 +50,7 @@ function SelectionContainer({
       <span className="capitalize w-full sm:w-auto sm:h-8 sm:leading-8 mb-0 sm:mb-2 sm:mx-1 mx-0">
         {name}
       </span>
-      {selections.map((selection) => {
+      {selections.map((selection: (typeof selections)[number]) => {
         const { id, type, title } = selection
         return name === "images" ? (
           <div

@@ -24,6 +24,7 @@ export interface TextMessageContent {
     raw?: Text
     message?: RoutingOutput["message"]
     context?: RoutingOutput["context"]
+    actions?: ActionType[]
     workflows?: ActionType[]
   }
 }
@@ -75,6 +76,8 @@ export interface QAWorkflowStepContent extends BaseStepContent {
     workflow: QAWorkflowType
     context: RoutingOutput["context"],
     searchResultsStepId?: string
+    searchResultsCount?: number
+    indexed?: boolean
   }
 }
 
@@ -152,6 +155,10 @@ export interface ActionStepControl extends BaseStepControl {
   addUserMessage: ReturnType<typeof useMessages>["addUserMessage"]
   addBotMessage: ReturnType<typeof useMessages>["addBotMessage"]
   addBotStep: ReturnType<typeof useMessages>["addBotStep"]
+  getBotStep: ReturnType<typeof useMessages>["getBotStep"]
+  updateBotStep: ReturnType<typeof useMessages>["updateBotStep"]
+  completeBotMessageStep: ReturnType<typeof useMessages>["completeBotMessageStep"]
+  addFunctionCallOutput: (tool_call_id: string, output: string) => void
   updateBotAction: ReturnType<typeof useMessages>["updateBotAction"]
 }
 

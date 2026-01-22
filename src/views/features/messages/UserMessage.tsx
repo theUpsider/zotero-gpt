@@ -12,6 +12,7 @@ import {
   StateName,
   States,
   StateSelections,
+  StateSelection,
   stateNames,
   selectionConfig,
   areStatesEmpty,
@@ -72,7 +73,7 @@ interface SelectionDetailProps {
 function SelectionDetail({ name, state }: SelectionDetailProps) {
   return (
     <div className="self-end">
-      {state.map(({ id, type, title }) => {
+      {state.map(({ id, type, title }: StateSelection) => {
         return (
           <div key={id} className="flex flex-initial">
             <span className="flex-none">
@@ -126,7 +127,7 @@ function Gallery({ images }: GalleryProps) {
   }
   return (
     <div className="flex flex-row flex-wrap items-end self-end">
-      {images.map(({ id, title, image }) => (
+      {images.map(({ id, title, image }: States["images"][number]) => (
         <div
           key={id}
           className="relative border border-solid border-neutral-300"

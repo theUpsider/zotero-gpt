@@ -19,7 +19,7 @@ import {
   copyButtonDef,
   noteButtonDef,
 } from "../../../components/buttons/types"
-import { QAActionStepControl, QueryType } from "../../../../typings/actions"
+import { QAActionStepControl } from "../../../../typings/actions"
 import stringify from "json-stringify-pretty-compact"
 import { CodeHighlighter } from "../../../components/code/CodeHighlighter"
 import { useAssistant } from "../../../../hooks/useAssistant"
@@ -42,7 +42,6 @@ import { QAActionStepContent } from "../../../../typings/steps"
 
 export interface QAActionProps {
   content: QAActionStepContent
-  context: { query: QueryType }
   control: QAActionStepControl
 }
 

@@ -19,7 +19,6 @@ import {
   ToolCall,
 } from "openai/resources/beta/threads/runs/steps"
 import { OpenAIError } from "openai/error"
-import { anonymizeError } from "../../../models/utils/error"
 import { StopRespondingButton } from "../../components/buttons/StopRespondingButton"
 import { MessageControl } from "./MessageControl"
 import { MessageStep } from "./steps/MessageStep"
@@ -43,7 +42,6 @@ import {
 import { serializeError } from "serialize-error"
 import { CodeHighlighter } from "../../components/code/CodeHighlighter"
 import { message as log } from "../../../utils/loggers"
-import { update } from "lodash"
 import { RoutingOutputWorkflow } from "../../../models/schemas/routing"
 import { ActionType } from "../../../typings/actions"
 import { ActionStep } from "./steps/ActionStep"
@@ -308,78 +306,6 @@ export const BotMessage = memo(function BotMessageContent({
     return () => clearTimeout(timer)
   }, [steps])
 
-  function saveMessageStep(stepContent: any) {
-    console.log({ stepContent })
-    const { stream, messageSlice, ...messageContent } = message
-    editMessage({
-      ...messageContent,
-      status: "done",
-      steps: [stepContent],
-    })
-  }
-
-  function handleVote(vote: "up" | "down") {
-    const { id, timestamp } = message
-    const serializedMessages = JSON.stringify(
-      messageSlice.map((message) => {
-        const input = (message as BotMessageProps).content
-
-        if (message.type === "BOT_MESSAGE" && message.error) {
-          if (message.error.stack && typeof message.error.stack === "string") {
-            message.error.stack = anonymizeError(message.error.stack)
-          }
-        }
-        let purgedStates
-        if (
-          message.type === "USER_MESSAGE" &&
-          message.states.images.length > 0
-        ) {
-          const states = (message as UserMessageProps).states
-          purgedStates = {
-            ...states,
-            images: states.images.map(({ image, ...rest }) => ({
-              ...rest,
-              image: image.slice(0, 64) + "...",
-            })),
-          }
-        }
-        return {
-          id: message.id,
-          timestamp: message.timestamp,
-          type: message.type,
-          content: (message as UserMessageProps).content,
-          states: purgedStates,
-          input,
-        }
-      }),
-    )
-
-    submitFeedback(
-      {
-        id,
-        timestamp,
-        vote,
-        user: null,
-        messages: serializedMessages,
-        env: __env__,
-      },
-      (vote: "up" | "down") =>
-        editMessage({
-          ...message,
-          type: "BOT_MESSAGE",
-          vote,
-        }),
-      (success: boolean) => {
-        if (success) {
-          setVote(vote)
-          setError(false)
-        } else {
-          setError(true)
-        }
-      },
-    )
-  }
-
   function stopResponding() {
     stream?.abort()
   }
@@ -422,6 +348,8 @@ export const BotMessage = memo(function BotMessageContent({
       getBotStep,
       addBotStep,
       updateBotStep,
+      completeBotMessageStep,
+      updateBotAction,
       addFunctionCallOutput,
     }),
     [
@@ -433,6 +361,8 @@ export const BotMessage = memo(function BotMessageContent({
       getBotStep,
       addBotStep,
       updateBotStep,
+      completeBotMessageStep,
+      updateBotAction,
       addFunctionCallOutput,
     ],
   )
@@ -445,6 +375,7 @@ export const BotMessage = memo(function BotMessageContent({
       getBotStep,
       addBotStep,
       updateBotStep,
+      updateBotAction,
       addFunctionCallOutput,
     }),
     [
@@ -454,6 +385,7 @@ export const BotMessage = memo(function BotMessageContent({
       getBotStep,
       addBotStep,
       updateBotStep,
+      updateBotAction,
       addFunctionCallOutput,
     ],
   )
@@ -463,8 +395,10 @@ export const BotMessage = memo(function BotMessageContent({
       scrollToEnd,
       pauseScroll,
       resumeScroll,
+      updateBotAction,
+      addFunctionCallOutput,
     }),
-    [scrollToEnd, pauseScroll, resumeScroll],
+    [scrollToEnd, pauseScroll, resumeScroll, updateBotAction, addFunctionCallOutput],
   )
 
   if (steps.length === 0) {

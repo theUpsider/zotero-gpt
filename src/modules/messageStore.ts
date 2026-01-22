@@ -1,6 +1,6 @@
 import { config } from '../../package.json'
 import { Message } from '../views/features/messages/types'
-import type { nsXPCComponents_Classes } from '../typing/global'
+import type { nsXPCComponents_Classes } from '../typings/global'
 
 export abstract class MessageStore {
   constructor() { }
@@ -15,7 +15,7 @@ export class FileMessageStore extends MessageStore {
 
   constructor() {
     super()
-    this.file = this.initFile(PathUtils.join(Zotero.DataDirectory._dir, config.addonRef, 'messages.jsonl'))
+    this.file = this.initFile(PathUtils.join((Zotero as any).DataDirectory._dir, config.addonRef, 'messages.jsonl'))
   }
 
   private initFile(path: string) {
@@ -76,7 +76,7 @@ export class FileMessageStore extends MessageStore {
     } catch (e) {
       // Rename and clear the file
       const corruptedFilePath = PathUtils.join(
-        Zotero.DataDirectory._dir,
+        (Zotero as any).DataDirectory._dir,
         config.addonRef,
         `messages_corrupted_${new Date().valueOf()}.jsonl`
       )

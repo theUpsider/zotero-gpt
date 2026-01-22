@@ -93,7 +93,7 @@ export function AnnotateButton({ utils, input, states }: AnnotateButtonProps) {
         } absolute left-0 list-none m-0 mt-4 p-0 shadow-lg border border-solid border-gray-200`}
         style={{ background: "-moz-field" }}
       >
-        {annotations.map((item) => {
+        {annotations.map((item: NonNullable<typeof annotations>[number]) => {
           return (
             <li key={item.id}>
               <button

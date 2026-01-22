@@ -83,6 +83,9 @@ export function SearchResultsWidget({
   ) as SearchActionStepContent
   const output = searchResultsBotStep.params.action.output
   log({ output })
+  if (!output) {
+    return <div>Searching...</div>
+  }
 
   return (
     <div className="text-base">

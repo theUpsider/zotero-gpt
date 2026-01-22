@@ -80,7 +80,7 @@ export function NoteButton({ utils, input, states }: NoteButtonProps) {
             Create standalone note
           </button>
         </li>
-        {items.map((item) => {
+        {items.map((item: NonNullable<typeof items>[number]) => {
           const itemTitle =
             item.title && item.title.length > 64
               ? item.title.slice(0, 64) + "..."

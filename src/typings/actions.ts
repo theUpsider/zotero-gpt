@@ -6,22 +6,21 @@ import type { recursiveSearchAndCompileResults } from "../apis/zotero/search"
 export type ActionStatus = "IN_PROGRESS" | "COMPLETED"
 
 export type SearchActionType = z.infer<typeof SearchWorkflowSchema> & {
+  type: "search"
   mode: "search" | "qa" | "fulltext"
-  output: Awaited<ReturnType<typeof recursiveSearchAndCompileResults>>
+  output?: Awaited<ReturnType<typeof recursiveSearchAndCompileResults>>
 }
 
 export type QAActionType = z.infer<typeof QAWorkflowSchema> & {
+  type: "qa"
   input: any
-  output: any
+  output?: any
 }
 
 export type RetryActionType = {
   type: "retry"
-  input: {
-    message: string
-    prompt: string
-  }
-  output: any
+  input: any
+  output?: any
 }
 
 export type FileActionType = {
@@ -29,10 +28,14 @@ export type FileActionType = {
   input: {
     searchResultsStepId: string
   }
-  output: any
+  output?: any
 }
 
-export type ActionType = SearchActionType | QAActionType | RetryActionType
+export type ActionType =
+  | SearchActionType
+  | QAActionType
+  | RetryActionType
+  | FileActionType
 
 export type QueryType = NonNullable<z.infer<typeof QuerySchema>>
 
@@ -41,6 +44,7 @@ interface BaseActionStepControl {
   pauseScroll: () => void
   resumeScroll: () => void
   updateBotAction: ReturnType<typeof useMessages>["updateBotAction"]
+  addFunctionCallOutput: (tool_call_id: string, output: string) => void
 }
 
 export interface SearchActionStepControl extends BaseActionStepControl {
@@ -66,3 +70,9 @@ export interface RetryActionStepControl extends BaseActionStepControl {
 }
 
 export interface ErrorActionStepControl extends BaseActionStepControl { }
+
+export type ActionStepControl =
+  & SearchActionStepControl
+  & FileActionStepControl
+  & QAActionStepControl
+  & RetryActionStepControl

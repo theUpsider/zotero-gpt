@@ -1,6 +1,20 @@
 import { StateName, States, SimplifiedStates } from '../../typings/input'
 import { states as log } from '../../utils/loggers'
 
+// Re-export state-related types so consumers can import from this utility module
+export type {
+  StateName,
+  States,
+  SimplifiedStates,
+  StateSelection,
+  SelectedItem,
+  SelectedCollection,
+  SelectedCreator,
+  SelectedTag,
+  SelectedImage,
+  StateSelections,
+} from '../../typings/input'
+
 export function simplifyStates(states: States): SimplifiedStates {
   const simplifiedStates = {
     items: states.items.length > 0 ? states.items.map(item => item.id) : undefined,

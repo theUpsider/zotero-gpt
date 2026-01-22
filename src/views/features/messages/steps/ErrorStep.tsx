@@ -14,5 +14,5 @@ export interface ErrorStepProps {
 export function ErrorStep({ content, control }: ErrorStepProps) {
   const { params: error } = content
 
-  return <Error.ErrorAction content={{ error }} control={control} />
+  return <Error.ErrorAction content={{ error, status: content.status }} control={control} />
 }

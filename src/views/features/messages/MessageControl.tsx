@@ -7,6 +7,7 @@ import {
 import { CopyButton } from "../../components/buttons/CopyButton"
 import { NoteButton } from "../../components/buttons/NoteButton"
 import { AnnotateButton } from "../../components/buttons/AnnotateButton"
+import * as Markdown from "./actions/Markdown"
 
 function defaultCopy(input: any) {
   const textContent = "<pre>" + JSON.stringify(input, null, 2) + "</pre>"
