@@ -398,7 +398,13 @@ export const BotMessage = memo(function BotMessageContent({
       updateBotAction,
       addFunctionCallOutput,
     }),
-    [scrollToEnd, pauseScroll, resumeScroll, updateBotAction, addFunctionCallOutput],
+    [
+      scrollToEnd,
+      pauseScroll,
+      resumeScroll,
+      updateBotAction,
+      addFunctionCallOutput,
+    ],
   )
 
   if (steps.length === 0) {

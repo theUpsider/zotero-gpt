@@ -3,7 +3,13 @@ import { RoutingOutput } from "../models/schemas/routing"
 import { Text } from "openai/resources/beta/threads/messages"
 import { serializeError } from "serialize-error"
 import { useMessages } from "../hooks/useMessages"
-import type { ActionType, FileActionType, SearchActionType, QAActionType, RetryActionType } from "./actions"
+import type {
+  ActionType,
+  FileActionType,
+  SearchActionType,
+  QAActionType,
+  RetryActionType,
+} from "./actions"
 import { SearchWorkflowType, QAWorkflowType } from "./workflows"
 import { FileAction } from "../views/features/messages/actions/FileAction"
 import { SearchAction } from "../views/features/messages/actions/SearchAction"
@@ -45,7 +51,11 @@ export interface WidgetMessageContent {
 export interface MessageStepContent extends BaseStepContent {
   type: "MESSAGE_STEP"
   params: {
-    messages: (TextMessageContent | ImageMessageContent | WidgetMessageContent)[]
+    messages: (
+      | TextMessageContent
+      | ImageMessageContent
+      | WidgetMessageContent
+    )[]
   }
 }
 
@@ -63,7 +73,7 @@ export interface SearchWorkflowStepContent extends BaseStepContent {
   type: "WORKFLOW_STEP"
   params: {
     workflow: SearchWorkflowType
-    context: RoutingOutput["context"],
+    context: RoutingOutput["context"]
     searchResultsStepId?: string
     searchResultsCount?: number
   }
@@ -72,16 +82,17 @@ export interface SearchWorkflowStepContent extends BaseStepContent {
 export interface QAWorkflowStepContent extends BaseStepContent {
   type: "WORKFLOW_STEP"
   params: {
-
     workflow: QAWorkflowType
-    context: RoutingOutput["context"],
+    context: RoutingOutput["context"]
     searchResultsStepId?: string
     searchResultsCount?: number
     indexed?: boolean
   }
 }
 
-export type WorkflowStepContent = SearchWorkflowStepContent | QAWorkflowStepContent
+export type WorkflowStepContent =
+  | SearchWorkflowStepContent
+  | QAWorkflowStepContent
 
 export interface SearchActionStepContent extends BaseStepContent {
   type: "ACTION_STEP"
@@ -123,7 +134,11 @@ export interface RetryActionStepContent extends BaseStepContent {
   }
 }
 
-export type ActionStepContent = SearchActionStepContent | QAActionStepContent | RetryActionStepContent | FileActionStepContent
+export type ActionStepContent =
+  | SearchActionStepContent
+  | QAActionStepContent
+  | RetryActionStepContent
+  | FileActionStepContent
 
 export interface ErrorStepContent extends BaseStepContent {
   type: "ERROR_STEP"
@@ -133,7 +148,12 @@ export interface ErrorStepContent extends BaseStepContent {
   }
 }
 
-export type StepContent = MessageStepContent | ToolStepContent | ActionStepContent | WorkflowStepContent | ErrorStepContent
+export type StepContent =
+  | MessageStepContent
+  | ToolStepContent
+  | ActionStepContent
+  | WorkflowStepContent
+  | ErrorStepContent
 
 interface BaseStepControl {
   scrollToEnd: () => void
@@ -157,7 +177,9 @@ export interface ActionStepControl extends BaseStepControl {
   addBotStep: ReturnType<typeof useMessages>["addBotStep"]
   getBotStep: ReturnType<typeof useMessages>["getBotStep"]
   updateBotStep: ReturnType<typeof useMessages>["updateBotStep"]
-  completeBotMessageStep: ReturnType<typeof useMessages>["completeBotMessageStep"]
+  completeBotMessageStep: ReturnType<
+    typeof useMessages
+  >["completeBotMessageStep"]
   addFunctionCallOutput: (tool_call_id: string, output: string) => void
   updateBotAction: ReturnType<typeof useMessages>["updateBotAction"]
 }

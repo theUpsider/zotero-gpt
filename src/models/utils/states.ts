@@ -1,5 +1,5 @@
-import { StateName, States, SimplifiedStates } from '../../typings/input'
-import { states as log } from '../../utils/loggers'
+import { StateName, States, SimplifiedStates } from "../../typings/input"
+import { states as log } from "../../utils/loggers"
 
 // Re-export state-related types so consumers can import from this utility module
 export type {
@@ -13,15 +13,25 @@ export type {
   SelectedTag,
   SelectedImage,
   StateSelections,
-} from '../../typings/input'
+} from "../../typings/input"
 
 export function simplifyStates(states: States): SimplifiedStates {
   const simplifiedStates = {
-    items: states.items.length > 0 ? states.items.map(item => item.id) : undefined,
-    collections: states.collections.length > 0 ? states.collections.map(collection => collection.id) : undefined,
-    creators: states.creators.length > 0 ? states.creators.map(creator => creator.id) : undefined,
-    tags: states.tags.length > 0 ? states.tags.map(tag => tag.id) : undefined,
-    images: states.images.length > 0 ? states.images.map(image => image.id) : undefined,
+    items:
+      states.items.length > 0 ? states.items.map((item) => item.id) : undefined,
+    collections:
+      states.collections.length > 0
+        ? states.collections.map((collection) => collection.id)
+        : undefined,
+    creators:
+      states.creators.length > 0
+        ? states.creators.map((creator) => creator.id)
+        : undefined,
+    tags: states.tags.length > 0 ? states.tags.map((tag) => tag.id) : undefined,
+    images:
+      states.images.length > 0
+        ? states.images.map((image) => image.id)
+        : undefined,
   }
   return simplifiedStates
 }
@@ -43,13 +53,16 @@ function serializeState(states: SimplifiedStates, name: StateName) {
       `${name}:\n` +
       states[name]!.map(
         (id, i) =>
-          `  ${i + 1}. ${['creators', 'tags'].includes(name) ? Zotero.Utilities.Internal.Base64.decode(id as string) : id
-          }`
-      ).join('\n') +
-      '\n'
+          `  ${i + 1}. ${
+            ["creators", "tags"].includes(name)
+              ? Zotero.Utilities.Internal.Base64.decode(id as string)
+              : id
+          }`,
+      ).join("\n") +
+      "\n"
     )
   }
-  return ''
+  return ""
 }
 
 export function serializeStates(states: SimplifiedStates) {
@@ -58,75 +71,79 @@ export function serializeStates(states: SimplifiedStates) {
   }
   log("States", states)
   return (
-    'Application States:\n' +
-    serializeState(states, 'creators') +
-    serializeState(states, 'tags') +
-    serializeState(states, 'items') +
-    serializeState(states, 'collections') +
-    serializeState(states, 'images') + "\n\n"
+    "Application States:\n" +
+    serializeState(states, "creators") +
+    serializeState(states, "tags") +
+    serializeState(states, "items") +
+    serializeState(states, "collections") +
+    serializeState(states, "images") +
+    "\n\n"
   )
 }
 
 export function escapeTitle(title: string) {
-  return title.replace(/[\[]/g, '<').replace(/[\]]/g, '>')
+  return title.replace(/[\[]/g, "<").replace(/[\]]/g, ">")
 }
 
-export const stateNames = ['creators', 'tags', 'items', 'collections'] as StateName[]
+export const stateNames = [
+  "creators",
+  "tags",
+  "items",
+  "collections",
+] as StateName[]
 
 export const selectionConfig = {
   creators: {
     label: {
-      singular: 'creator',
-      plural: 'creators',
+      singular: "creator",
+      plural: "creators",
     },
-    prefix: '@',
-    colorClass: 'rose',
-    backgroundColor: 'rgb(255 228 230)', // rose-100
+    prefix: "@",
+    colorClass: "rose",
+    backgroundColor: "rgb(255 228 230)", // rose-100
     // borderBottom: 'solid rgb(244 63 94)', // rose-500
-    borderBottom: 'solid rgb(251 113 133)', // rose-400
+    borderBottom: "solid rgb(251 113 133)", // rose-400
   },
   tags: {
     label: {
-      singular: 'tag',
-      plural: 'tags',
+      singular: "tag",
+      plural: "tags",
     },
-    prefix: '#',
-    colorClass: 'lime',
-    backgroundColor: 'rgb(236 252 203)', // lime-100
+    prefix: "#",
+    colorClass: "lime",
+    backgroundColor: "rgb(236 252 203)", // lime-100
     // borderBottom: 'solid rgb(101 163 13)', // lime-600
-    borderBottom: 'solid rgb(132 204 22)', // lime-500
+    borderBottom: "solid rgb(132 204 22)", // lime-500
   },
   items: {
     label: {
-      singular: 'item',
-      plural: 'items',
+      singular: "item",
+      plural: "items",
     },
-    prefix: '/',
-    colorClass: 'indigo',
-    backgroundColor: 'rgb(224 231 255)', // indigo-100
-    borderBottom: 'solid rgb(129 140 248)', // indigo-400
+    prefix: "/",
+    colorClass: "indigo",
+    backgroundColor: "rgb(224 231 255)", // indigo-100
+    borderBottom: "solid rgb(129 140 248)", // indigo-400
   },
   collections: {
     label: {
-      singular: 'collection',
-      plural: 'collections',
+      singular: "collection",
+      plural: "collections",
     },
-    prefix: '^',
-    colorClass: 'amber',
-    backgroundColor: 'rgb(254 243 199)', // amber-100
+    prefix: "^",
+    colorClass: "amber",
+    backgroundColor: "rgb(254 243 199)", // amber-100
     // borderBottom: 'solid rgb(245 158 11)', // amber-500
-    borderBottom: 'solid rgb(251 191 36)', // amber-400
+    borderBottom: "solid rgb(251 191 36)", // amber-400
   },
   images: {
     label: {
-      singular: 'image',
-      plural: 'images',
+      singular: "image",
+      plural: "images",
     },
-    prefix: '~',
-    colorClass: 'teal',
-    backgroundColor: 'rgb(204 251 241)', // teal-100
-    borderBottom: 'solid rgb(45 212 191)', // teal-400
+    prefix: "~",
+    colorClass: "teal",
+    backgroundColor: "rgb(204 251 241)", // teal-100
+    borderBottom: "solid rgb(45 212 191)", // teal-400
   },
 }
-
-

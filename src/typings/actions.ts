@@ -1,5 +1,9 @@
 import { z } from "zod"
-import { SearchWorkflowSchema, QAWorkflowSchema, QuerySchema } from "../models/schemas/routing"
+import {
+  SearchWorkflowSchema,
+  QAWorkflowSchema,
+  QuerySchema,
+} from "../models/schemas/routing"
 import { useMessages } from "../hooks/useMessages"
 import type { recursiveSearchAndCompileResults } from "../apis/zotero/search"
 
@@ -57,7 +61,9 @@ export interface FileActionStepControl extends BaseActionStepControl {
   getBotStep: ReturnType<typeof useMessages>["getBotStep"]
   addBotStep: ReturnType<typeof useMessages>["addBotStep"]
   updateBotStep: ReturnType<typeof useMessages>["updateBotStep"]
-  completeBotMessageStep: ReturnType<typeof useMessages>["completeBotMessageStep"]
+  completeBotMessageStep: ReturnType<
+    typeof useMessages
+  >["completeBotMessageStep"]
 }
 
 export interface QAActionStepControl extends BaseActionStepControl {
@@ -69,10 +75,9 @@ export interface RetryActionStepControl extends BaseActionStepControl {
   addBotMessage: ReturnType<typeof useMessages>["addBotMessage"]
 }
 
-export interface ErrorActionStepControl extends BaseActionStepControl { }
+export interface ErrorActionStepControl extends BaseActionStepControl {}
 
-export type ActionStepControl =
-  & SearchActionStepControl
-  & FileActionStepControl
-  & QAActionStepControl
-  & RetryActionStepControl
+export type ActionStepControl = SearchActionStepControl &
+  FileActionStepControl &
+  QAActionStepControl &
+  RetryActionStepControl

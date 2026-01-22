@@ -33,6 +33,4 @@ export interface UserMessageProps {
 
 export type Message = UserMessageProps | BotMessageProps
 
-export type BotMessageStatus =
-  | "IN_PROGRESS"
-  | "COMPLETED"
+export type BotMessageStatus = "IN_PROGRESS" | "COMPLETED"
