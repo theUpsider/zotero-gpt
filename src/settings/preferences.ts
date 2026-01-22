@@ -105,7 +105,7 @@ function bindPrefEvents() {
     .prefs!!.window.document.querySelector(
       `#zotero-prefpane-${config.addonRef}-OPENAI_MODEL`,
     )
-    ?.addEventListener("change", (e) => {
+    ?.addEventListener("input", (e) => {
       addon.data.prefs!.window.alert(
         `Please restart Zotero for your new OPENAI Model to take effect.`,
       )
